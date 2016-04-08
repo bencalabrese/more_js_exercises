@@ -5,18 +5,18 @@ var reader = readline.createInterface({
 });
 
 function addNumbers (sum, numsLeft, completionCallback) {
-    if (numsLeft < 1) {
-        completionCallback(sum);
-        reader.close();
-    } else {
-        reader.question("Num?\n", function (answer) {
-            sum += parseInt(answer);
+  if (numsLeft < 1) {
+    completionCallback(sum);
+    reader.close();
+  } else {
+    reader.question("Num?\n", function (answer) {
+      sum += parseInt(answer);
 
-            console.log("Interim sum: " + sum);
+      console.log("Interim sum: " + sum);
 
-            addNumbers(sum, numsLeft - 1, completionCallback);
-        });
-    }
+      addNumbers(sum, numsLeft - 1, completionCallback);
+    });
+  }
 }
 
 addNumbers(0, 3, function (sum) {
