@@ -30,6 +30,8 @@ HanoiGame.prototype = {
         console.log(endTowerIdx);
         if(self.isValidMove(startTowerIdx, endTowerIdx)){
           self.move(startTowerIdx, endTowerIdx);
+        } else {
+          console.log("That's not a valid move!");
         }
       });
     });
@@ -71,9 +73,30 @@ HanoiGame.prototype = {
   move : function(startTowerIdx, endTowerIdx){
     var moveVars = this.calcMoveVars(startTowerIdx, endTowerIdx);
     moveVars.endTower.push(moveVars.startTower.pop());
+  },
+
+  print : function() {
+    console.log(this.stacks);
+  },
+
+  isWon : function() {
+    return (this.stacks[1].length === 3 || this.stacks[2].length === 3);
+  },
+
+  run : function(completionCallback) {
+    this.promptMove();
+
+    if (this.isWon()) {
+      completionCallback();
+    } else {
+      this.run(completionCallback);
+    }
   }
 };
 
 var game = new HanoiGame();
 
-reader.close();
+game.run(function() {
+  reader.close();
+  console.log("winner!");
+});
